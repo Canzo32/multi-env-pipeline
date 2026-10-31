@@ -20,7 +20,7 @@ jobs:
       - run: |
           aws cloudformation deploy \
             --template-file template.yaml \
-            --stack-name scanner-dev \
+            --stack-name scanner-prod \
             --parameter-overrides Environment=dev \
             --capabilities CAPABILITY_NAMED_IAM
 
