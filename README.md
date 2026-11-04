@@ -35,17 +35,6 @@ GitHub Actions (OIDC token, no stored keys)
 | Separate VPCs, no NAT gateways | Network isolation at zero cost |
 | CloudTrail trail (management events) | Audit trail of who created what |
 
-## Proof
-
-| | |
-|---|---|
-| **Green pipeline with approval gate** | **CloudFormation stacks** |
-| ![Pipeline](screenshots/pipeline.png) | ![Stacks](screenshots/stacks.png) |
-| **CloudTrail CreateChangeSet** | **Dev role denied on prod stack** |
-| ![CloudTrail](screenshots/cloudtrail.png) | ![Denied](screenshots/dev-denied.png) |
-
-The last screenshot shows the dev job failing with AccessDenied when pointed at `scanner-prod`.
-
 ## Lessons Learned
 
 - **"Not authorized to perform sts:AssumeRoleWithWebIdentity" gives no detail.** The role, provider, audience and workflow were all correct. CloudTrail showed the real `sub` claim: it contained numeric owner and repository IDs (`repo:Canzo32@<id>/multi-env-pipeline@<id>:environment:dev`), so my trust policy pattern never matched. I fixed it with wildcards around the ID segments.
